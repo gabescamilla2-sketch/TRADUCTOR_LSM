@@ -163,4 +163,5 @@ Webcam → MediaPipe Hand Landmarker → normalizar_mano()
 
 ## Autor
 
-**Gab Escamilla** · [@gabescamilla2-sketch](https://github.com/gabescamilla2-sketch)
+**Gabirel Alejandro Escamilla Barahona** · [@gabescamilla2-sketch](https://github.com/gabescamilla2-sketch)
+**USO PARA FINES DE ESTUDIO**
