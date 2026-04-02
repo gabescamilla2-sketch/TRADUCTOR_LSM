@@ -1,4 +1,4 @@
-#  TRADUCTOR LSM — Lengua de Señas Mexicana
+# 🤟 TRADUCTOR LSM — Lengua de Señas Mexicana
 
 Sistema de reconocimiento y traducción de señas del alfabeto dactilológico mexicano en tiempo real, usando visión por computadora y aprendizaje automático.
 
@@ -22,6 +22,18 @@ El sistema puede acumular letras en tiempo real mediante votación mayoritaria y
 
 ---
 
+## ¿Cómo funciona MediaPipe?
+
+MediaPipe Hand Landmarker detecta y rastrea **21 puntos de referencia (landmarks)** por mano en cada frame de la cámara. Cada punto tiene coordenadas (x, y, z) normalizadas, lo que hace la detección robusta ante cambios de escala y posición.
+
+![Detección de landmarks con MediaPipe](data/hand_crops.png)
+
+*Landmarks detectados en tiempo real sobre muestras del dataset. Los puntos cubren muñeca, nudillos y puntas de cada dedo.*
+
+Las coordenadas de los 21 puntos se normalizan restando la posición de la muñeca (punto 0), generando un vector de **63 features invariante a la posición de la mano en pantalla**. Ese vector es la entrada directa al clasificador.
+
+---
+
 ## Estructura del proyecto
 
 ```
@@ -32,6 +44,7 @@ TRADUCTOR_LSM/
 │   ├── entrenar_modelo.py    # Entrenamiento del clasificador
 │   └── inferencia_lsm.py     # Inferencia en tiempo real
 ├── data/
+│   ├── hand_crops.png            # Ejemplo de detección de landmarks
 │   └── processed/
 │       ├── dataset_lsm.csv       # Dataset estático (landmarks x seña)
 │       ├── secuencias_lsm.json   # Secuencias de movimiento (J, K, Z)
@@ -111,7 +124,7 @@ python src/inferencia_lsm.py
 
 ---
 
-## Pipeline
+## Pipeline técnico
 
 ```
 Webcam → MediaPipe Hand Landmarker → normalizar_mano()
@@ -121,7 +134,7 @@ Webcam → MediaPipe Hand Landmarker → normalizar_mano()
        → predicción estabilizada
 ```
 
-**Features:** 63 valores flotantes por frame — coordenadas (x, y, z) de los 21 puntos de referencia de la mano, normalizados respecto a la muñeca (punto 0).
+**Features estáticos:** 63 valores flotantes por frame — coordenadas (x, y, z) de los 21 puntos de referencia de la mano, normalizados respecto a la muñeca (punto 0).
 
 **Señas de movimiento (J, K, Z):** se representan con 378 features estadísticos extraídos de secuencias de 26 frames (media, std, mín, máx, rango y pendiente lineal por feature).
 
@@ -132,12 +145,13 @@ Webcam → MediaPipe Hand Landmarker → normalizar_mano()
 ### Dataset
 - **Esquema de columnas desincronizado:** el CSV fue generado con una versión anterior del colector que no escribía los prefijos `izq_`/`der_` en el encabezado. Las columnas 64–126 quedaron sin nombre (`Unnamed: 64..126`). El script `entrenar_modelo.py` maneja esto automáticamente colapsando ambas mitades en 63 features unificados.
 - **Dataset monomano:** cada muestra usa una sola mano (izquierda o derecha), ya que el dataset fue capturado alternando manos por seña. El modelo funciona correctamente porque aprende de ambas, pero es más robusto con la mano dominante.
+- **Señas de movimiento incompletas:** J, K y Z tienen 15, 13 y 13 secuencias respectivamente (meta: 50). La precisión mejorará al completar el dataset.
 
 ### Código
-- `cv2.CAP_MSMF` en `collect_dataset.py` (línea 393) es exclusivo de Windows. En Linux usar `cv2.VideoCapture(0)` o `cv2.CAP_V4L2`.
+- `cv2.CAP_MSMF` en `collect_dataset.py` es exclusivo de Windows. En Linux usar `cv2.VideoCapture(0)` o `cv2.CAP_V4L2`.
 - La inversión de handedness para visualización en `collect_dataset.py` construye objetos vacíos que pueden generar warnings con algunas versiones de DrawingUtils.
 - El reporte en `analizar_dataset.py` tiene hardcodeado `"/23"` en lugar de calcularlo dinámicamente.
-- `analizar_dataset.py` busca columnas con prefijo `izq_`/`der_` que no existen en el CSV actual; la función `visualizar_landmarks()` sale silenciosamente sin graficar.
+- `analizar_dataset.py` busca columnas con prefijo `izq_`/`der_` que no existen en el CSV actual; `visualizar_landmarks()` sale silenciosamente sin graficar.
 
 ---
 
@@ -163,5 +177,6 @@ Webcam → MediaPipe Hand Landmarker → normalizar_mano()
 
 ## Autor
 
-**Gabirel Alejandro Escamilla Barahona** · [@gabescamilla2-sketch](https://github.com/gabescamilla2-sketch)
-**USO PARA FINES DE ESTUDIO**
+**Gabriel Alejandro Escamilla Barahona** · [@gabescamilla2-sketch](https://github.com/gabescamilla2-sketch)
+
+> Uso para fines de estudio
