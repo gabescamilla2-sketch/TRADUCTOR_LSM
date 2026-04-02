@@ -1,4 +1,4 @@
-# 🤟 TRADUCTOR LSM — Lengua de Señas Mexicana
+#  TRADUCTOR LSM — Lengua de Señas Mexicana
 
 Sistema de reconocimiento y traducción de señas del alfabeto dactilológico mexicano en tiempo real, usando visión por computadora y aprendizaje automático.
 
