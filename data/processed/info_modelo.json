@@ -1,0 +1,64 @@
+{
+  "modelo": "MLP",
+  "clases": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ],
+  "num_clases": 26,
+  "test_accuracy": 0.9121,
+  "test_f1_weighted": 0.9111,
+  "resultados_modelos": {
+    "RandomForest": {
+      "cv_f1_mean": 0.8923023360319287,
+      "cv_f1_std": 0.013922298532483795,
+      "val_accuracy": 0.9243697478991597,
+      "val_f1": 0.924518292165351
+    },
+    "SVM": {
+      "cv_f1_mean": 0.8825802159976229,
+      "cv_f1_std": 0.01832302395889049,
+      "val_accuracy": 0.9243697478991597,
+      "val_f1": 0.92113572701808
+    },
+    "MLP": {
+      "cv_f1_mean": 0.9232871112474804,
+      "cv_f1_std": 0.025068830534272314,
+      "val_accuracy": 0.9411764705882353,
+      "val_f1": 0.9406671759612936
+    }
+  },
+  "features": {
+    "total": 441,
+    "descripcion": "63 landmarks (x,y,z × 21 puntos) de la mano activa"
+  },
+  "fecha_entrenamiento": "2026-04-01T18:59:49.866156",
+  "archivos": {
+    "modelo": "data\\processed\\mejor_modelo.pkl",
+    "label_encoder": "data\\processed\\label_encoder.pkl",
+    "scaler": "data\\processed\\scaler.pkl"
+  }
+}
