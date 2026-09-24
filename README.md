@@ -165,16 +165,6 @@ Webcam → MediaPipe Hand Landmarker → normalizar_mano()
 
 ---
 
-## Tecnologías
-
-- **MediaPipe 0.10+** — detección de landmarks de manos
-- **OpenCV** — captura y procesamiento de video
-- **scikit-learn** — MLP, RandomForest, SVM, Pipeline, StandardScaler
-- **pandas / numpy** — manejo del dataset
-- **joblib** — serialización del modelo
-
----
-
 ## Autor
 
 **Gabriel Alejandro Escamilla Barahona** · [@gabescamilla2-sketch](https://github.com/gabescamilla2-sketch)
