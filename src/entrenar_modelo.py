@@ -378,7 +378,7 @@ def entrenar_y_evaluar(
     mejor_nombre = max(resultados, key=lambda k: resultados[k]["val_f1"])
     mejor_pipeline = resultados[mejor_nombre]["pipeline"]
 
-    print(f"\n   🏆  Mejor modelo: {mejor_nombre} "
+    print(f"\n    Mejor modelo: {mejor_nombre} "
           f"(val F1={resultados[mejor_nombre]['val_f1']:.4f})")
 
     # Evaluación final en test (solo una vez)
@@ -569,7 +569,7 @@ def predecir_sena(landmarks_izq, landmarks_der):
 # ─── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    print("\n🚀  ENTRENAMIENTO DEL CLASIFICADOR LSM")
+    print("\n  ENTRENAMIENTO DEL CLASIFICADOR LSM")
     print("=" * 55)
 
     DIR_SALIDA.mkdir(parents=True, exist_ok=True)
@@ -607,7 +607,7 @@ def main():
 
     # Resumen final
     print("\n" + "=" * 55)
-    print("✅  ENTRENAMIENTO COMPLETADO")
+    print("  ENTRENAMIENTO COMPLETADO")
     print("=" * 55)
     print(f"   Modelo ganador: {mejor_nombre}")
     print(f"   Accuracy  test: {acc_test:.2%}")

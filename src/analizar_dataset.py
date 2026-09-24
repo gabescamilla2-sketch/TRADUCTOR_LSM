@@ -1,8 +1,6 @@
 """
 analizar_dataset.py
 -------------------
-Análisis y preprocesamiento del dataset de LSM
-(CORREGIDO - Maneja datos nulos y visualización)
 """
 
 import pandas as pd
@@ -287,7 +285,7 @@ def preprocesar_datos_estaticos(df, test_size=0.2, val_size=0.1):
 def guardar_datos_preprocesados(data, nombre_archivo="data/processed/datos_entrenamiento.npz"):
     """Guarda los datos preprocesados"""
     if data is None:
-        print("\n❌ No hay datos para guardar")
+        print("\n No hay datos para guardar")
         return
     
     # Guardar arrays
@@ -308,10 +306,10 @@ def guardar_datos_preprocesados(data, nombre_archivo="data/processed/datos_entre
     if data['pca']:
         joblib.dump(data['pca'], "data/processed/pca.pkl")
     
-    print(f"\n✅ Datos guardados en: {nombre_archivo}")
-    print(f"✅ Scaler guardado en: data/processed/scaler.pkl")
+    print(f"\n Datos guardados en: {nombre_archivo}")
+    print(f" Scaler guardado en: data/processed/scaler.pkl")
     if data['pca']:
-        print(f"✅ PCA guardado en: data/processed/pca.pkl")
+        print(f" PCA guardado en: data/processed/pca.pkl")
 
 def generar_reporte(df, secuencias):
     """Genera un reporte completo del dataset"""
@@ -320,7 +318,7 @@ def generar_reporte(df, secuencias):
     print("="*50)
     
     # Datos estáticos
-    print("\n📊 DATOS ESTÁTICOS:")
+    print("\n DATOS ESTÁTICOS:")
     print(f"   Total muestras: {len(df)}")
     print(f"   Señas capturadas: {df['etiqueta'].nunique()}")
     print(f"   Promedio muestras por seña: {len(df)/df['etiqueta'].nunique():.1f}")
@@ -328,12 +326,12 @@ def generar_reporte(df, secuencias):
     # Datos de secuencias
     if secuencias:
         total_sec = sum(len(sec) for sec in secuencias.values())
-        print(f"\n🎬 DATOS DE MOVIMIENTO:")
+        print(f"\n DATOS DE MOVIMIENTO:")
         print(f"   Total secuencias: {total_sec}")
         print(f"   Señas con movimiento: {list(secuencias.keys())}")
         
         # Recomendaciones
-        print(f"\n💡 RECOMENDACIONES:")
+        print(f"\n RECOMENDACIONES:")
         for sena, secs in secuencias.items():
             if len(secs) < 50:
                 print(f"   - Para la seña '{sena}': faltan {50 - len(secs)} secuencias")
@@ -345,17 +343,17 @@ def generar_reporte(df, secuencias):
             print(f"   - Señales sin datos de movimiento: {senas_faltantes}")
     
     # Estado general
-    print(f"\n📈 ESTADO GENERAL:")
+    print(f"\n ESTADO GENERAL:")
     senas_completas = df[df['etiqueta'].apply(lambda x: df['etiqueta'].value_counts()[x] >= 50)]['etiqueta'].nunique()
     print(f"   Señales estáticas completas: {senas_completas}/23")
     if secuencias:
         senas_mov_completas = sum(1 for s in secuencias if len(secuencias[s]) >= 50)
         print(f"   Señales con movimiento completas: {senas_mov_completas}/3")
-    
-    print(f"\n✅ Análisis completado exitosamente!")
+
+    print(f"\nAnálisis completado exitosamente!")
 
 def main():
-    print("🚀 ANÁLISIS Y PREPROCESAMIENTO DEL DATASET LSM")
+    print(" ANÁLISIS Y PREPROCESAMIENTO DEL DATASET LSM")
     print("="*50)
     
     # 1. Analizar datos estáticos
@@ -369,7 +367,7 @@ def main():
         try:
             visualizar_landmarks(df_estatico)
         except Exception as e:
-            print(f"\n⚠️ Error en visualización: {e}")
+            print(f"\n Error en visualización: {e}")
             print("   Continuando con el análisis...")
     
     # 4. Preprocesar datos
@@ -382,13 +380,13 @@ def main():
             print(f"\n❌ Error en preprocesamiento: {e}")
             print("   Continuando con análisis básico...")
     else:
-        print(f"\n⚠️ Datos insuficientes: solo {len(df_estatico)} muestras")
+        print(f"\n Datos insuficientes: solo {len(df_estatico)} muestras")
         print("   Se necesitan al menos 10 muestras para entrenamiento")
     
     # 5. Generar reporte
     generar_reporte(df_estatico, secuencias)
     
-    print("\n✨ ANÁLISIS COMPLETADO!")
+    print("\n ANÁLISIS COMPLETADO!")
     print("\nSiguientes pasos:")
     print("1. Completar las muestras faltantes (50 por seña)")
     print("2. Ejecutar entrenar_modelo.py")
